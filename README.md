@@ -33,8 +33,6 @@ polimarket/
 ## ⚙️ Tecnología utilizada
 
 - Lenguaje: **Java SE 8+**
-- IDE sugerido: NetBeans o IntelliJ (opcional)
-- No requiere base de datos ni frameworks externos
 
 ---
 
