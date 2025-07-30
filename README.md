@@ -1,112 +1,117 @@
-# 🏪 PoliMarket – Sistema Modular en Java
+# 🛒 PoliMarket - Sistema de Simulación Empresarial en Java
 
-Este proyecto implementa un sistema empresarial modular para **PoliMarket**, una empresa con múltiples áreas de negocio. Está desarrollado completamente en **Java**, organizado en componentes funcionales separados, y probado desde **consola** mediante tres clientes.
-
----
-
-## 📋 Descripción del Proyecto
-
-PoliMarket cuenta con diferentes áreas de negocio que operan con sus propios sistemas de información:
-
-- 🧾 Recursos Humanos
-- 🛒 Ventas
-- 🏬 Bodega
-- 📦 Proveedores
-- 🚚 Entregas
-
-Los módulos se comunican simuladamente a través de clases organizadas por componentes. El sistema permite desde la autenticación de vendedores hasta la gestión de productos, ventas, entregas y abastecimiento.
-
+Este proyecto es una simulación empresarial por consola para la empresa ficticia **PoliMarket**, desarrollada completamente en **Java** con una estructura modular basada en paquetes. No utiliza bases de datos ni herramientas externas como Postman. Todo está diseñado para ejecutarse desde consola, utilizando lógica simulada en memoria.
 
 ---
 
-## ⚙️ Tecnologías utilizadas
+## 📁 Estructura de Carpetas
 
-- Java SE 8+
-- Visual Studio Code o NetBeans
-- Línea de comandos (terminal)
-
---- 
-
-✅ Funcionalidades implementadas
-Se implementaron más de 10 funcionalidades, cumpliendo y superando los requisitos mínimos de la actividad:
-
-Componente	Funcionalidades
-recursos_humanos	AutenticarVendedor, AutenticarUsuario
-autenticacion_autorizacion	Usuario, Rol, Privilegio
-ventas	crearVenta, ventaFinal, cotizacion, cliente, producto, crearTarea, disponibilidad
-bodega	generarEntrada, generarInventario, disponibilidad, hacerCompra, consultaExistencia
-proveedor	producto, disponibilidad, empresa
-entrega	producto, cliente, entrega, registrar, consultarVentas
-
-👥 Clientes del sistema
-1. ClienteConsola.java
-Autenticación del vendedor
-
-Creación de venta
-
-Consulta de disponibilidad
-
-2. ClienteAlterno.java
-Registro de entrega
-
-Consulta de ventas por cliente
-
-3. ClienteSistema.java
-Ejecución de todo el ciclo de negocio completo
-
-Integración de ventas, entregas, compras y proveedores
-
-📚 Estructura académica cumplida
-✔ Sistema construido en Java
-✔ Organización por componentes funcionales
-✔ Más de 5 funcionalidades implementadas
-✔ 2 clientes en consola que usan al menos 2 funcionalidades
-✔ Diagrama de clases y tabla de funcionalidades respetados
-✔ Probado completamente por consola (sin GUI)
-
-
-📌 Autor
-Nombre: [Jairo Espejo Bohorquez]
-
-
-## 🚀 Cómo ejecutar
-
-### Requisitos
-
-- Tener instalado Java (JDK 8+)
-- Un IDE como VS Code o NetBeans
-
-### Instrucciones
-
-```bash
-
-▶ Cliente 1: Simulación Completa del Sistema
-
-javac main/ClienteSistema.java
-java main.ClienteSistema
-
-▶ Cliente 2: Consola Simple – Venta
-
-javac main/ClienteConsola.java
-java main.ClienteConsola
-
-▶ Cliente 3: Consola Alterna – Entregas
-
-javac main/ClienteAlterno.java
-java main.ClienteAlterno
-
-
-🧱 Estructura del Proyecto
-
-PoliMarket/
-├── recursos_humanos/
+```
+polimarket/
 ├── autenticacion_autorizacion/
-├── ventas/
+│   └── Autenticacion.java
 ├── bodega/
-├── proveedor/
-├── entrega/
-└── main/
+│   └── DisponibilidadInventario.java
+├── entregas/
+│   └── Entrega.java
+├── main/
+│   ├── PoliMarketApp.java       # Aplicación principal
+│   ├── Cliente1.java            # Cliente que consulta inventario y proveedor
+│   └── Cliente2.java            # Cliente que autentica vendedor y registra venta
+├── proveedores/
+│   └── DisponibilidadProveedor.java
+├── recursos_humanos/
+│   └── Vendedor.java
+├── ventas/
+    ├── Cliente.java
+    ├── Producto.java
+    └── Venta.java
+```
 
-Cada carpeta representa un componente independiente, con clases funcionales implementadas según el diagrama de clases de la actividad académica.
+---
+
+## ⚙️ Tecnología utilizada
+
+- Lenguaje: **Java SE 8+**
+- IDE sugerido: NetBeans o IntelliJ (opcional)
+- No requiere base de datos ni frameworks externos
+
+---
+
+## 🚀 Archivos principales
+
+### `PoliMarketApp.java`
+Simula un flujo completo de negocio:
+- Autenticación del vendedor
+- Validación de autorización
+- Registro de venta
+- Verificación de stock
+- Consulta a proveedor
+- Generación de entrega
+
+### `Cliente1.java`
+- Consulta disponibilidad de un producto en bodega
+- Consulta proveedor sugerido para dicho producto
+
+### `Cliente2.java`
+- Autentica un vendedor por nombre
+- Si está autorizado, permite registrar una venta simulada
+
+---
+
+## ✅ Cómo compilar y ejecutar (desde consola CMD o PowerShell)
+
+### 1. Compilar todo:
+```bash
+javac ventas\*.java
+javac bodega\*.java
+javac proveedores\*.java
+javac entregas\*.java
+javac recursos_humanos\*.java
+javac autenticacion_autorizacion\*.java
+javac main\PoliMarketApp.java
+```
+
+### 2. Ejecutar aplicación principal:
+```bash
+java main.PoliMarketApp
+```
+
+### 3. Ejecutar clientes individualmente:
+```bash
+javac main\Cliente1.java
+java main.Cliente1
+
+javac main\Cliente2.java
+java main.Cliente2
+```
+
+---
+
+## 🧪 Simulación de datos en memoria
+No se usan archivos de texto ni bases de datos reales. Los datos están simulados dentro de los servicios mediante arrays en memoria.
+
+Por ejemplo, `DisponibilidadInventario.java` contiene:
+```java
+String[][] productos = {
+    {"P001", "Café", "10.0", "20"},
+    {"P002", "Azúcar", "8.0", "0"},
+    {"P003", "Leche", "12.0", "15"}
+};
+```
+
+
+
+---
+
+## 📝 Notas para el profesor
+- Toda la lógica está simulada por consola
+- No requiere instalar ninguna dependencia externa
+- Puede usarse desde IDE o consola con `javac` y `java`
+- Cliente1 y Cliente2 funcionan como "usuarios externos" del sistema
+- El sistema PoliMarketApp muestra el flujo completo automáticamente
+
+---
+
 
 
