@@ -1,115 +1,171 @@
-# 🛒 PoliMarket - Sistema de Simulación Empresarial en Java
-
-Este proyecto es una simulación empresarial por consola para la empresa ficticia **PoliMarket**, desarrollada completamente en **Java** con una estructura modular basada en paquetes. No utiliza bases de datos ni herramientas externas como Postman. Todo está diseñado para ejecutarse desde consola, utilizando lógica simulada en memoria.
+# 📌 PoliMarket v2 — Sistema de Ventas con Patrones de Diseño
 
 ---
 
-## 📁 Estructura de Carpetas
+## 📖 Descripción General
 
-```
-polimarket/
-├── autenticacion_autorizacion/
-│   └── Autenticacion.java
-├── bodega/
-│   └── DisponibilidadInventario.java
-├── entregas/
-│   └── Entrega.java
-├── main/
-│   ├── PoliMarketApp.java       # Aplicación principal
-│   ├── Cliente1.java            # Cliente que consulta inventario y proveedor
-│   └── Cliente2.java            # Cliente que autentica vendedor y registra venta
-├── proveedores/
-│   └── DisponibilidadProveedor.java
-├── recursos_humanos/
-│   └── Vendedor.java
-├── ventas/
-    ├── Cliente.java
-    ├── Producto.java
-    └── Venta.java
-```
+**PoliMarket** es un sistema de ventas desarrollado en **Java** que simula el flujo completo de una tienda:  
+gestiona **clientes**, **productos**, **inventario**, **ventas** y **entregas**.  
+
+El proyecto implementa **5 patrones de diseño** solicitados en clase:
+
+- **Singleton**
+- **Iterator**
+- **Abstract Factory**
+- **Prototype**
+- **Decorator**
+
+Además, se basa en el **diagrama de clases proporcionado** para mantener la estructura original y cumplir los requisitos.
 
 ---
 
-## ⚙️ Tecnología utilizada
+## 🧩 Objetivos del Proyecto
 
-- Lenguaje: **Java SE 8+**
-
----
-
-## 🚀 Archivos principales
-
-### `PoliMarketApp.java`
-Simula un flujo completo de negocio:
-- Autenticación del vendedor
-- Validación de autorización
-- Registro de venta
-- Verificación de stock
-- Consulta a proveedor
-- Generación de entrega
-
-### `Cliente1.java`
-- Consulta disponibilidad de un producto en bodega
-- Consulta proveedor sugerido para dicho producto
-
-### `Cliente2.java`
-- Autentica un vendedor por nombre
-- Si está autorizado, permite registrar una venta simulada
+✅ Aplicar **patrones de diseño** en un escenario real.  
+✅ Desarrollar un sistema **modular, extensible y mantenible**.  
+✅ Integrar lógica de **ventas**, **inventario** y **autenticación**.  
+✅ Practicar buenas **prácticas de desarrollo** y **organización de código**.  
 
 ---
 
-## ✅ Cómo compilar y ejecutar (desde consola CMD o PowerShell)
+🏛️ Patrones de Diseño Implementados
+🔹 Singleton
+Ubicación: autenticacion_autorizacion/Autenticacion.java
 
-### 1. Compilar todo:
+Rol: Garantiza que solo exista una instancia de autenticación.
+
+Uso:
+
+java
+Copiar
+Editar
+Autenticacion auth = Autenticacion.getInstancia();
+if(auth.autenticar("vendedor","1234")) { ... }
+🔹 Iterator
+Ubicación: ventas/Venta.java
+
+Rol: Permite recorrer productos de una venta sin exponer la lista interna.
+
+Uso:
+
+java
+Copiar
+Editar
+for(Producto p : venta) {
+    System.out.println(p.getNombre());
+}
+🔹 Abstract Factory
+Ubicación: fabricas/
+
+Rol: Crea productos desde diferentes orígenes (Bodega o Proveedor).
+
+Uso:
+
+java
+Copiar
+Editar
+ProductoFactoryClient factory = new ProductoFactoryClient(new BodegaFactory());
+Producto camiseta = factory.construirProducto("B01", "Camiseta", new BigDecimal("30000"));
+🔹 Prototype
+Ubicación: ventas/Producto.java
+
+Rol: Permite clonar un producto existente.
+
+Uso:
+
+java
+Copiar
+Editar
+Producto copia = original.clone();
+🔹 Decorator
+Ubicación: ventas/ProductoDecorador.java
+
+Rol: Añade funcionalidades extra a un producto sin modificar su clase.
+
+Uso:
+
+java
+Copiar
+Editar
+Producto regalo = new EmbalajeRegalo(new GarantiaExtendida(camiseta));
+🧠 Diagrama de Clases
+Basado en el diagrama original proporcionado por el profesor,
+adaptado para incluir patrones de diseño y relaciones.
+
+## 📂 Estructura del Proyecto
+
 ```bash
-javac ventas\*.java
-javac bodega\*.java
-javac proveedores\*.java
-javac entregas\*.java
-javac recursos_humanos\*.java
-javac autenticacion_autorizacion\*.java
-javac main\PoliMarketApp.java
-```
+PoliMarket_v2/
+└─ src/
+   ├─ acceso/                     # Fachada de autenticación
+   ├─ autenticacion_autorizacion/ # Singleton: control de acceso global
+   ├─ bodega/                     # Inventario y Kardex
+   ├─ empresa/                    # Información de la empresa
+   ├─ entregas/                   # Control de entregas
+   ├─ fabricas/                   # Abstract Factory para productos
+   ├─ proveedores/                # Datos de proveedores externos
+   ├─ recursos_humanos/           # Vendedores de la empresa
+   ├─ ventas/                     # Productos, clientes, ventas y decoradores
+   └─ main/                       # Punto de entrada: apps y casos de prueba
 
-### 2. Ejecutar aplicación principal:
-```bash
-java main.PoliMarketApp
-```
 
-### 3. Ejecutar clientes individualmente:
-```bash
-javac main\Cliente1.java
+🚀 Ejecución del Proyecto
+1. Requisitos
+Java JDK 17+
+
+Visual Studio Code con Extension Pack for Java
+
+2. Compilar
+Desde la carpeta src:
+
+javac -encoding UTF-8 -d ../bin autenticacion_autorizacion/*.java ventas/*.java fabricas/*.java main/*.java bodega/*.java empresa/*.java entregas/*.java proveedores/*.java recursos_humanos/*.java acceso/*.java
+
+4. Ejecutar
+Desde la carpeta bin:
+
+cd ../bin
+
+java main.PoliMarketApp   # Ejecuta el sistema completo
+
+Ejecutar clientes individuales:
+
 java main.Cliente1
-
-javac main\Cliente2.java
 java main.Cliente2
-```
-
----
-
-## 🧪 Simulación de datos en memoria
-No se usan archivos de texto ni bases de datos reales. Los datos están simulados dentro de los servicios mediante arrays en memoria.
-
-Por ejemplo, `DisponibilidadInventario.java` contiene:
-```java
-String[][] productos = {
-    {"P001", "Café", "10.0", "20"},
-    {"P002", "Azúcar", "8.0", "0"},
-    {"P003", "Leche", "12.0", "15"}
-};
-```
 
 
+🧪 Casos de Prueba Incluidos
+Caso	Archivo	Descripción
+Cliente1	main/Cliente1.java	Prueba creación desde Bodega con Decorator + Prototype
+Cliente2	main/Cliente2.java	Prueba creación desde Proveedor con Iterator manual
+PoliMarketApp	main/PoliMarketApp.java	Ejecuta TODO el sistema con inventario, ventas y entregas
 
----
+🧾 Ejemplo de Salida
+bash
+Copiar
+Editar
+=== INICIO POLIMARKET ===
+Acceso OK
 
-## 📝 Notas para el profesor
-- Toda la lógica está simulada por consola
-- No requiere instalar ninguna dependencia externa
-- Puede usarse desde IDE o consola con `javac` y `java`
-- Cliente1 y Cliente2 funcionan como "usuarios externos" del sistema
-- El sistema PoliMarketApp muestra el flujo completo automáticamente
+[Factory] Producto creado desde Bodega
+[Factory] Producto creado desde Proveedor
+Venta registrada para: Ana García (ID: C-100)
+ - Camiseta + Embalaje + Garantía  $37000
+ - Camiseta (B01-COPIA)           $30000
+TOTAL: $67000
 
----
+Detalle Venta 2 (iteración manual):
+ * Pantalón (P99) - $60000
+ * Pantalón + Embalaje (P99) - $62000
+TOTAL: $122000
+=== FIN ===
 
+📌 Buenas Prácticas Aplicadas
+Separación por capas y paquetes.
 
+Uso de BigDecimal para cálculos monetarios.
 
+Encapsulamiento y validaciones robustas.
+
+Patrones aplicados siguiendo buenas prácticas.
+
+Código documentado y legible.
