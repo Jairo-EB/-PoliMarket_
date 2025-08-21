@@ -159,13 +159,3 @@ Detalle Venta 2 (iteración manual):
 TOTAL: $122000
 === FIN ===
 
-📌 Buenas Prácticas Aplicadas
-Separación por capas y paquetes.
-
-Uso de BigDecimal para cálculos monetarios.
-
-Encapsulamiento y validaciones robustas.
-
-Patrones aplicados siguiendo buenas prácticas.
-
-Código documentado y legible.
